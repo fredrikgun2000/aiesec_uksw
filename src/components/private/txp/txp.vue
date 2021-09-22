@@ -17,36 +17,3 @@
 		</div>
 	</div>
 </template>
-
-<style>
-	.landscape{
-		background-image: url("~@/assets/material/landscape.jpg");
-		width: 100%;
-		background-size: contain;
-		height: 700px;
-	}
-
-	.landscape-konten{
-		height: 700px;
-		position: absolute;
-		top: 40%;
-		left: 100px;
-	}
-
-	.landscape-konten h1::after{
-		content: '';
-		width: 5%;
-		height: 5px;
-		background-color: #037EF3;
-		display: block;
-	}
-
-	.landscape-konten p{
-		text-align: justify;
-		width: 40%;
-	}
-
-	@media screen and (max-width: 1140px) {
-		
-	}
-</style>
