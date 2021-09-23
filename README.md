@@ -1,25 +1,3 @@
 # aiesec
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# aiesec_uksw
+AIESEC merupakan oraganisasi yang digerakkan mahasiswa terbesar di dunia. Organisasi yang berfokus pada pengembangan kepemimpinan para pemuda dan menjadi duta di luar negeri untuk menjalankan proyek sosial.
