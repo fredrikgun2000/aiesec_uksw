@@ -27,33 +27,165 @@
 					<h4>TXP</h4>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-2 ml-auto">
+			<div class="row mb-2">
+				<div class="col-2">
 					<b-form-select
 			          id="input-3"
 			          v-model="form.food"
-			          :options="tahun_exp"
+			          :options="nama_exp"
 			          required
 			        ></b-form-select>
 				</div>
 			</div>
-			<div class="mt-3">
-				<div class="col-12 text-center">
-					<div class="row spantxp">
-						<div class="col-lg-1 col-md-1 col-sm-2 mx-1 mt-2 rounded">
-							<router-link to="/admin/dtxp">
-								<div class="row bg-biru" style="border-radius: 10px;">
-									<div class="col-12 py-2">
-										<h1>11</h1>
-									</div>
-								</div>
-							</router-link>
+			<div class="row">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Department</b>
+						</div>
+						<div class="col-6">
+							OGV
 						</div>
 					</div>
 				</div>
-		    </div>
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Position</b>
+						</div>
+						<div class="col-6">
+							Quality & Customer Experience
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Team Name</b>
+						</div>
+						<div class="col-6">
+							LOKI
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Team Leader</b>
+						</div>
+						<div class="col-6">
+							Astrid
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Team Vision</b>
+						</div>
+						<div class="col-6">
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Member Name</b>
+						</div>
+						<div class="col-6">
+							Fredrik Gunawan
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Start Date Experience</b>
+						</div>
+						<div class="col-6">
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>End Date Experience</b>
+						</div>
+						<div class="col-6">
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>Start Date Review</b>
+						</div>
+						<div class="col-6">
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<b>End Date Review</b>
+						</div>
+						<div class="col-6">
+
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
+		<div class="container-fluid">
+			<div class="row mt-5">
+				<div class="col-12">
+					<table class="table" id="datatable">
+				        <thead>
+				          <tr>
+				            <th>No</th>
+				            <th>Area</th>
+				            <th>Key Driving Performance</th>
+				            <th>Target</th>
+				            <th>Gap</th>
+				            <th>Score</th>
+				          </tr>
+				        </thead>
+				        <tbody>
+				          <tr>
+				          	<td>a</td>
+				          	<td>a</td>
+				          	<td>a</td>
+				          	<td>a</td>
+				          	<td>a</td>
+				          	<td>a</td>
+				          </tr>
+				          <tr>
+				          	<td>b</td>
+				          	<td>b</td>
+				          	<td>b</td>
+				          	<td>b</td>
+				          	<td>b</td>
+				          	<td>b</td>
+				          </tr>
+				          
+				        </tbody>
+				      </table>    
+				</div>
+			</div>
+		</div>
 
 	    <b-modal
 	      id="modal-prevent-closing"
@@ -161,7 +293,18 @@
 	</div>
 </template>
 
+
+
+
+
+
 <script>
+	import 'jquery/dist/jquery.min.js';
+	import 'bootstrap/dist/css/bootstrap.min.css';
+	import "datatables.net-dt/js/dataTables.dataTables";
+	import "datatables.net-dt/css/jquery.dataTables.min.css";
+	import $ from 'jquery';
+
 	export default{
 		data: function () {
 		    return {
@@ -179,11 +322,12 @@
 		        },
 		        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
 		        show: true,
-		        tahun_exp: [{ text: 'Select Year', value: null }, '2021', '2022'],
+		        nama_exp: [{ text: 'Select Year', value: null }, 'Igo', 'Fredrik Gunawan'],
 			    }
 		},
 		created: function () {
 			this.ketikheading();
+			 $('#datatable').DataTable();
 		},
 		methods: {
 		 onSubmit(event) {

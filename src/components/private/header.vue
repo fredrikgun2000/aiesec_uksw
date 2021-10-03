@@ -10,7 +10,7 @@
 	    <b-collapse id="nav-collapse" is-nav>
 
 	      <b-navbar-nav class="ml-auto">
-	        <b-nav-item href="#">Link</b-nav-item>
+	        <b-nav-item href="#">Private</b-nav-item>
 	        <b-nav-item-dropdown text="Hi, Astrid" right>
 				<b-dropdown-item href="#">Log Out</b-dropdown-item>
 				</b-nav-item-dropdown>

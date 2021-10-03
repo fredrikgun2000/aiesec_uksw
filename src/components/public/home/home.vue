@@ -1,10 +1,10 @@
 <template>
-	<div class="landscape">
-		<div class="landscape-konten">
+	<div class="home-landscape">
+		<div class="home-landscape-konten">
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
-						<h1 class="text-biru">What is AIESEC?</h1>
+						<h1 class="biru">{{heading}}</h1>
 					</div>
 				</div>
 				<div class="row">
@@ -18,22 +18,48 @@
 	</div>
 </template>
 
+<script>
+	export default{
+		data: function () {
+		    return {
+		      heading: '',
+		      
+		      i:0,
+		      judul:'What is AIESEC?'
+		    }
+		},
+		created: function () {
+			this.ketikheading();
+		},
+		methods: {
+		  ketikheading: function () {
+		  	if (this.i < this.judul.length) {
+		  		this.heading += this.judul.charAt(this.i);
+		  		this.i++;
+		  		setTimeout(this.ketikheading, 100);
+		  	}
+		  }
+		}
+	}
+</script>
+
 <style>
-	.landscape{
+	.home-landscape{
 		background-image: url("~@/assets/material/landscape.jpg");
 		width: 100%;
 		background-size: contain;
+		background-repeat: no-repeat;
 		height: 700px;
 	}
 
-	.landscape-konten{
+	.home-landscape-konten{
 		height: 700px;
 		position: absolute;
 		top: 40%;
 		left: 100px;
 	}
 
-	.landscape-konten h1::after{
+	.home-landscape-konten h1::after{
 		content: '';
 		width: 5%;
 		height: 5px;
@@ -41,7 +67,7 @@
 		display: block;
 	}
 
-	.landscape-konten p{
+	.home-landscape-konten p{
 		text-align: justify;
 		width: 40%;
 	}
