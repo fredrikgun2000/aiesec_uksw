@@ -10,6 +10,6 @@ class positions extends Model
 {
     use SoftDeletes;
 	protected $table = 'positions';
-	protected $fillable = ['lcvp_id','department_name','team_name','team_vision'];
+	protected $fillable = ['department_id','manager_id','role_name'];
 	protected $dates = ['deleted_at'];
 }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Privasi\AdminDepartmentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/admin/department/departmentdata', [AdminDepartmentController::class,'department_departmentdata']);
+
+Route::get('/admin/department/lcvpdata', [AdminDepartmentController::class,'department_lcvpdata']);
+
+Route::post('/admin/department/submitdata', [AdminDepartmentController::class,'department_submitdata']);
+
+Route::post('/admin/department/hapusdata', [AdminDepartmentController::class,'department_hapusdata']);

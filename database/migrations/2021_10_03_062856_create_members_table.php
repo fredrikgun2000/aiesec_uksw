@@ -20,8 +20,8 @@ class CreateMembersTable extends Migration
             $table->unsignedBigInteger('lcp_id')->nullable();
             $table->unsignedBigInteger('lcvp_id')->nullable();
             $table->unsignedBigInteger('manager_id')->nullable();
-            $table->String('nim')->nullable();
             $table->String('fullname')->nullable();
+            $table->String('nim')->nullable();
             $table->String('email')->nullable();
             $table->String('password')->nullable();
             $table->timestamps();
