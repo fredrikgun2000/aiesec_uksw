@@ -21,6 +21,33 @@
 				</div>
 			</div>
 		</div>
+		<div class="container">
+			<div class="row mt-2">
+				<div class="col-12">
+					<table width="100%" class="text-center" border="1">
+						<tr class="bg-hijau text-light">
+							<th>ID</th>
+							<th>Name</th>
+							<th>LCVP</th>
+							<th>Team Name</th>
+							<th>Team Vision</th>
+							<th>Action</th>
+						</tr>
+						<tr v-for="d in departmentdata" v-bind:key ="d.id">
+							<td>{{d.id}}</td>
+							<td>{{d.department_name}}</td>
+							<td>{{d.lcvp_name}}</td>
+							<td>{{d.team_name}}</td>
+							<td>{{d.team_vision}}</td>
+							<td>
+								<b-icon-pencil class="mx-1 biru"></b-icon-pencil>
+								<b-icon-trash class="mx-1 merah" @click="deletedepartement(d.id, d.department_name)"></b-icon-trash>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
 
 		<b-modal
 	      id="modal-prevent-closing"
@@ -47,32 +74,29 @@
 		          class="department-input"
 		        ></b-form-select>
 		      </b-form-group>
-	        <b-form-group 
-          id="lcvp-group" 
-          label="lcvp" 
-          label-for="lcvps" 
-          :state="lcvpsState"
-          invalid-feedback="lcvp is required">
-		        <b-form-select
+	        <b-form-group  
+	          id="lcvp-group" 
+	          label="lcvp" 
+	          label-for="lcvps">
+		        <select
 		          id="lcvps"
-		          v-model="lcvps"
-		          :options="lcvp"
-				  :state="lcvpsState"
-		          required
-		          class="department-input"
-		        ></b-form-select>
+		          v-model ="lcvp"
+		          class="department-input form-control"
+		        >
+			        <option :value="lcvp">Select One</option>
+			        <option v-for="d in lcvpss" v-bind:key ="d.id" :value="d.id">
+			        	{{d.fullname}}
+			        </option>
+
+		        </select>
 		      </b-form-group>
 	        <b-form-group
 	          label="Team Name"
 	          label-for="teamname-input"
-	          invalid-feedback="Team Name is required"
-	          :state="teamnameState"
 	        >
 	          <b-form-input
 	            id="teamname-input"
 	            v-model="teamname"
-	            :state="teamnameState"
-	            required
 	            placeholder="ex : Loki, Thor ..."
 	            class="department-input"
 	          ></b-form-input>
@@ -80,14 +104,10 @@
 	        <b-form-group
 	          label="Team Vision"
 	          label-for="teamvision-input"
-	          invalid-feedback="Team Vision is required"
-	          :state="teamvisionState"
 	        >
 	          <b-form-input
 	            id="teamvision-input"
 	            v-model="teamvision"
-	            :state="teamvisionState"
-	            required
 	            placeholder="teamvision ..."
 	            class="department-input"
 	          ></b-form-input>
@@ -155,7 +175,9 @@
 		
 	}
 </style>
+
 <script>
+	import axios from 'axios';
 	export default{
 		data: function () {
 		    return {
@@ -166,42 +188,105 @@
 
 				departmentnames:null,
 		        departmentnamesState: null,
-		        departmentname: [{ text: 'Select One', value: null }, 'Outgoing Global Volunteer', 'Marketing', 'External Relation', 'Finance Governance and Legal','Executive Board'],
+		        departmentname: [{ text: 'Select One', value: null },'Outgoing Global Volunteer', 'Marketing', 'External Relation', 'Finance Governance and Legal','Executive Board'],
 
-		        lcvps:null,
+		        lcvpss:undefined,
+		        lcvp:null,
 		        lcvpsState: null,
-		        lcvp: [{ text: 'Select One', value: null }, ''],
 				teamname: '',
 		        teamnameState: null,
 				teamvision: '',
 		        teamvisionState: null,
-		        submittedNames: [],
-			    }
+
+		        departmentdata:undefined,
+		        
+		    }
 		},
 		created: function () {
 			this.ketikheading();
+			this.getLCVP();
+			this.getdepartment();
 		},
 		methods: {
-			ketikheading: function () {
+			// method
+			ketikheading() {
 			  	if (this.i < this.judul.length) {
 			  		this.heading += this.judul.charAt(this.i);
 			  		this.i++;
 			  		setTimeout(this.ketikheading, 100);
 			  	}
 			  },
+
+			// ambil data
+			getLCVP(){
+				axios({
+				  method: 'get',
+				  url: 'http://localhost:8000/api/admin/department/lcvpdata',
+				}).then(
+					(response) => {
+						this.lcvpss = response.data.data;
+					} 
+				);
+			},
+			getdepartment(){
+				axios({
+				  method: 'get',
+				  url: 'http://localhost:8000/api/admin/department/departmentdata',
+				}).then(
+					(response) => {
+						this.departmentdata = response.data.data;
+					} 
+				);
+			},
+
+
+			// hapus Data
+			deletedepartement(id,name){
+				this.$swal({
+				  title: 'Ingin menghapus?',
+				  text: 'Data yang anda akan hapus adalah department '+name+'.',
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#037EF3',
+				  cancelButtonColor: '#F85A40',
+				  confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				  if (result.isConfirmed) {
+			        let data = new FormData();
+			        data.append('department_id', id);
+			        axios({
+					  method: 'post',
+					  url: 'http://localhost:8000/api/admin/department/hapusdata',
+					  data: data,
+					});
+
+			        this.$nextTick(() => {
+					    this.$swal(
+					      'Deleted!',
+					      'department <b>'+name+'</b> berhasil di hapus.',
+					      'success'
+					    )
+
+			        });
+			      }
+
+			  })
+			},
+
+			// simpan Data
 			checkFormValidity() {
 				const valid = this.$refs.form.checkValidity()
-				this.positionsState = valid
+				this.lcvpsState = valid
 				this.departmentnamesState = valid
 				this.teamnameState = valid
 				this.teamvisionState = valid
 				return valid
 			},
 			resetModal() {
-				this.positions = null
-				this.positionsState = null
-				this.departments = ''
-				this.departmentsState = null
+				this.lcvp = null
+				this.lcvpState = null
+				this.departmentnames = null
+				this.departmentnamesState = null
 				this.teamname = ''
 				this.teamnameState = null
 				this.teamvision = ''
@@ -214,18 +299,29 @@
 				this.handleSubmit()
 			},
 			handleSubmit() {
-				// Exit when the form isn't valid
-				if (!this.checkFormValidity()) {
-				  return
-			}
-				// Push the name to submitted names
-				alert(this.positions)
-				this.submittedNames.push(this.name)
-				// Hide the modal manually
-				this.$nextTick(() => {
-				  this.$bvModal.hide('modal-prevent-closing')
-				})
-			}
+	        if (!this.checkFormValidity()) {
+	          return
+	        }
+
+	        let data = new FormData();
+	        data.append('lcvp_id', this.lcvp);
+	        data.append('department_name', this.departmentnames);
+	        data.append('team_name', this.teamname);
+	        data.append('team_vision', this.teamvision);
+
+	        axios({
+			  method: 'post',
+			  url: 'http://localhost:8000/api/admin/department/submitdata',
+			  data: data,
+			});
+
+	        this.$nextTick(() => {
+	          this.$bvModal.hide('modal-prevent-closing');
+	          this.getdepartment();
+	        })
+	      }
+
+
 		}
 	}
 </script>
